@@ -1,4 +1,4 @@
-# time_calculator
+# time-calculator 🕰
 
 ### Assignment
 
