@@ -1,5 +1,7 @@
 # time-calculator 🕰
 
+![Mr. Bean - Time](https://github.com/ognjenstrbanovic/time-calculator/blob/master/mr-bean-time.gif?raw=true)
+
 ### Assignment
 
 Write a function named `add_time` that takes in two required parameters and one optional parameter:
