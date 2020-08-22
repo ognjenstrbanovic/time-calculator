@@ -14,13 +14,23 @@ def add_time(start, duration, weekday = False):
     else:
         new_start = str(int(start.strip()[:2]) + 12) + start.strip()[2:5]
 
-    # found from kite.com...
-    start_time = datetime.time(hour=int(new_start[:2]), minute=int(new_start[-2:]))
+    start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[3:]), second=0, microsecond=0)
+
     if len(duration) == 4:
-        added_time = datetime.timedelta(hours=int(duration[:1]), minutes=int(duration[-2:]))
+        if duration[0] != "0":
+            added_time = datetime.timedelta(hours=int(duration[0]), minutes=int(duration[-2:]))
+        else:
+            added_time = datetime.timedelta(minutes=int(duration[-2:]))
     else:
         added_time = datetime.timedelta(hours=int(duration[:2]), minutes=int(duration[-2:]))
 
+    formatted_new_time = start_time + added_time
+
+    # using strftime() method...
+    almost_new_time = formatted_new_time.strftime("%H:%M")
+
+    print(almost_new_time)
+
     # return new_time
 
-add_time("11:06 PM", "2:02")
+add_time("11:40 AM", "1:25")
