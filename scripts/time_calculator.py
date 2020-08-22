@@ -24,12 +24,10 @@ def add_time(start, duration, weekday = False):
     else:
         added_time = datetime.timedelta(hours=int(duration[:2]), minutes=int(duration[-2:]))
 
-    formatted_new_time = start_time + added_time
+    unformatted_new_time = start_time + added_time
 
     # using strftime() method...
-    almost_new_time = formatted_new_time.strftime("%H:%M")
-
-    print(almost_new_time)
+    new_time = unformatted_new_time.strftime("%I:%M %p")
 
     # return new_time
 
