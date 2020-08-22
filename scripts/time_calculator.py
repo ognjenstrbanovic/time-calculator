@@ -1,6 +1,7 @@
 # dependencies
 import datetime
 from datetime import timedelta
+import calendar
 
 def add_time(start, duration, weekday = False):
 
@@ -19,11 +20,7 @@ def add_time(start, duration, weekday = False):
     else:
         new_start = str(int(start[:1]) + 12) + start[2:4]
 
-    # print(new_start)
-
     start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[2:]), second=0, microsecond=0)
-
-    # print(start_time)
 
     # reformatting added_time...
     if len(duration) == 4:
@@ -38,31 +35,38 @@ def add_time(start, duration, weekday = False):
     else:
         added_time = datetime.timedelta(hours=int(duration[:1]), minutes=int(duration[-2:]))
 
-    # print(added_time)
-
-    datetime_new_time = start_time + added_time
-
-    # print(datetime_new_time)
+    new_time_in_datetime = start_time + added_time
 
     # using strftime() method...
-    new_time = datetime_new_time.strftime("%-I:%M %p")
+    new_time = new_time_in_datetime.strftime("%-I:%M %p")
 
-    # logic...
-    difference_in_days = datetime_new_time.date() - start_time.date()
-
-    # print(difference_in_days)
-
-    if str(difference_in_days) == "0:00:00":
-        return new_time
-    elif str(difference_in_days)[:2] == "1" + " ":
-        new_time += " (next day)"
-        return new_time
-    elif str(difference_in_days)[:2] != "1" + " ":
+    difference_in_days = new_time_in_datetime.date() - start_time.date()
+    # logic for output
+    if weekday == False:
+        if str(difference_in_days) == "0:00:00":
+            return new_time
+        elif str(difference_in_days)[:2] == "1" + " ":
+            new_time += " (next day)"
+            return new_time
+        elif str(difference_in_days)[:2] != "1" + " ":
+            if str(difference_in_days)[1] == " ":
+                new_time += f" ({str(difference_in_days)[0]} days later)"
+                return new_time
+            else:
+                new_time += f" ({str(difference_in_days)[:2]} days later)"
+            return new_time
+    else:
+        if str(difference_in_days) == "0:00:00":
+            return f"{new_time}, {calendar.day_name[new_time_in_datetime.weekday()]}"
+        elif str(difference_in_days)[:2] == "1" + " ":
+            new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} (next day)"
+            return new_time
         if str(difference_in_days)[1] == " ":
-            new_time += f" ({str(difference_in_days)[0]} days later)"
+            new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} ({str(difference_in_days)[:1]} days later)"
+            return new_time
         else:
-            new_time += f" ({str(difference_in_days)[:2]} days later)"
+            new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} ({str(difference_in_days)[:2]} days later)"
         return new_time
 
 
-print(add_time("11:55 AM", "3:12"))
+print(add_time("2:59 AM", "24:00", "Friday"))
