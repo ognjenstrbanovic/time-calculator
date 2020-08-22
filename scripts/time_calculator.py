@@ -22,6 +22,7 @@ def add_time(start, duration, weekday = False):
     else:
         start_time = datetime.datetime.now().replace(hour=int(new_start[:1]), minute=int(new_start[2:]), second=0, microsecond=0)
 
+    # reformatting added_time...
     if len(duration) == 4:
         if duration[0] != "0":
             added_time = datetime.timedelta(hours=int(duration[0]), minutes=int(duration[-2:]))
@@ -35,11 +36,19 @@ def add_time(start, duration, weekday = False):
     # using strftime() method...
     new_time = datetime_new_time.strftime("%-I:%M %p")
 
-    print(datetime_new_time - added_time)
+    print(str(datetime_new_time - start_time))
 
     # logic...
-    hours_minutes_seconds_length = 7
-    if len(str(datetime_new_time)) == hours_minutes_seconds_length:
+    hour_minute_second_length = 7
+    if len(str(datetime_new_time - start_time)) == 7:
+        return new_time
+    elif str(datetime_new_time.date() - start_time.date())[:2] == "0:00:00":
+        return new_time
+    elif str(datetime_new_time.date() - start_time.date())[:2] == "1" + " ":
+        new_time += " (next day)"
+        return new_time
+    elif str(datetime_new_time.date() - start_time.date())[0] != "1" + " ":
+        new_time += f" ({str(datetime_new_time.date() - start_time.date())[0]} days later)"
         return new_time
 
-print(add_time("11:59 PM", "20:05"))
+print(add_time("11:59 PM", "24:05"))
