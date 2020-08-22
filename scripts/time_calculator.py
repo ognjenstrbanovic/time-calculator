@@ -5,16 +5,21 @@ from datetime import timedelta
 def add_time(start, duration, weekday = False):
 
     # reformatting 'start'; w/ help from GeeksforGeeks...
-    if start.strip()[-2:] == "AM" and start.strip()[:2] == "12":
+    if start[-2:] == "AM" and start[:2] == "12":
         new_start = "00" + start[2:-2]
-    elif start.strip()[-2:] == "AM":
+    elif start[-2:] == "AM":
         new_start = start[:-2]
-    elif start.strip()[-2:] == "PM" and start.strip()[:2] == "12":
+    elif start[-2:] == "PM" and start[:2] == "12":
         new_start = start[:-2]
+    elif len(start) == 7:
+        new_start = str(int(start[:1]) + 12) + start[2:5]
     else:
-        new_start = str(int(start.strip()[:2]) + 12) + start.strip()[2:5]
+        new_start = str(int(start[:2]) + 12) + start[2:5]
 
-    start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[3:]), second=0, microsecond=0)
+    if len(start) == 7:
+        start_time = datetime.datetime.now().replace(hour=int(new_start[:1]), minute=int(new_start[2:]), second=0, microsecond=0)
+    else:
+        start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[3:]), second=0, microsecond=0)
 
     if len(duration) == 4:
         if duration[0] != "0":
@@ -44,4 +49,4 @@ def add_time(start, duration, weekday = False):
     else:
         return new_time
 
-print(add_time("11:40 AM", "31:25"))
+print(add_time("5:01 AM", "0:00"))
