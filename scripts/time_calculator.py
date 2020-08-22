@@ -4,31 +4,25 @@ from datetime import timedelta
 
 def add_time(start, duration, weekday = False):
 
+
     # reformatting 'start'; w/ help from GeeksforGeeks...
-    typical_start_length = 8
+    long_start_length = 8
     if start[-2:] == "AM" and start[:2] == "12":
         new_start = "00" + start[2:-2]
     elif start[-2:] == "AM":
-        new_start = start[:-2]
+        new_start = start[:-3]
     elif start[-2:] == "PM" and start[:2] == "12":
         new_start = start[:-2]
-    elif len(start) == typical_start_length:
+    elif len(start) == long_start_length:
         new_start = str(int(start[:2]) + 12) + start[2:5]
     else:
         new_start = str(int(start[:1]) + 12) + start[2:5]
 
-    print(new_start)
-
-    if len(start) == typical_start_length:
+    if len(start) == long_start_length:
         start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[3:]), second=0, microsecond=0)
     else:
-        if len(new_start) == 4 and new_start[0] == "0":
-            start_time = datetime.datetime.now().replace(hour=int(new_start[:1]), minute=int(new_start[2:]), second=0, microsecond=0)
-        elif len(new_start) == 4 and new_start[0] != "0":
-            start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[2:]), second=0, microsecond=0)
+        start_time = datetime.datetime.now().replace(hour=int(new_start[:1]), minute=int(new_start[2:]), second=0, microsecond=0)
 
-    print(start_time)
-    
     # reformatting added_time...
     if len(duration) == 4:
         if duration[0] != "0":
@@ -59,4 +53,5 @@ def add_time(start, duration, weekday = False):
             new_time += f" ({str(datetime_new_time.date() - start_time.date())[:2]} days later)"
         return new_time
 
-print(add_time("5:01 AM", "0:00"))
+
+print(add_time("9:15 AM", "5:30"))
