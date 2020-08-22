@@ -36,8 +36,6 @@ def add_time(start, duration, weekday = False):
     # using strftime() method...
     new_time = datetime_new_time.strftime("%-I:%M %p")
 
-    print(str(datetime_new_time - start_time))
-
     # logic...
     hour_minute_second_length = 7
     if len(str(datetime_new_time - start_time)) == 7:
@@ -48,7 +46,10 @@ def add_time(start, duration, weekday = False):
         new_time += " (next day)"
         return new_time
     elif str(datetime_new_time.date() - start_time.date())[0] != "1" + " ":
-        new_time += f" ({str(datetime_new_time.date() - start_time.date())[0]} days later)"
+        if str(datetime_new_time.date() - start_time.date())[1] == " ":
+            new_time += f" ({str(datetime_new_time.date() - start_time.date())[0]} days later)"
+        else:
+            new_time += f" ({str(datetime_new_time.date() - start_time.date())[:2]} days later)"
         return new_time
 
 print(add_time("11:59 PM", "24:05"))
