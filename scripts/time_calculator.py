@@ -17,11 +17,18 @@ def add_time(start, duration, weekday = False):
     else:
         new_start = str(int(start[:1]) + 12) + start[2:5]
 
+    print(new_start)
+
     if len(start) == typical_start_length:
         start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[3:]), second=0, microsecond=0)
     else:
-        start_time = datetime.datetime.now().replace(hour=int(new_start[:1]), minute=int(new_start[2:]), second=0, microsecond=0)
+        if len(new_start) == 4 and new_start[0] == "0":
+            start_time = datetime.datetime.now().replace(hour=int(new_start[:1]), minute=int(new_start[2:]), second=0, microsecond=0)
+        elif len(new_start) == 4 and new_start[0] != "0":
+            start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[2:]), second=0, microsecond=0)
 
+    print(start_time)
+    
     # reformatting added_time...
     if len(duration) == 4:
         if duration[0] != "0":
@@ -52,4 +59,4 @@ def add_time(start, duration, weekday = False):
             new_time += f" ({str(datetime_new_time.date() - start_time.date())[:2]} days later)"
         return new_time
 
-print(add_time("11:59 PM", "24:05"))
+print(add_time("5:01 AM", "0:00"))
