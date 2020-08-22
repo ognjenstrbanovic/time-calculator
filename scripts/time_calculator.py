@@ -36,7 +36,6 @@ def add_time(start, duration, weekday = False):
         added_time = datetime.timedelta(hours=int(duration[:1]), minutes=int(duration[-2:]))
 
     new_time_in_datetime = start_time + added_time
-
     # using strftime() method...
     new_time = new_time_in_datetime.strftime("%-I:%M %p")
 
@@ -66,7 +65,7 @@ def add_time(start, duration, weekday = False):
             return new_time
         else:
             new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} ({str(difference_in_days)[:2]} days later)"
-        return new_time
+            return new_time
 
 
 print(add_time("2:59 AM", "24:00", "Friday"))
