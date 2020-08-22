@@ -29,6 +29,19 @@ def add_time(start, duration, weekday = False):
     # using strftime() method...
     new_time = unformatted_new_time.strftime("%I:%M %p")
 
-    # return new_time
+    # logic...
+    hour_minute_second_length = 7
+    if len(str(unformatted_new_time - start_time)) > 7 and weekday == True:
+        if str(unformatted_new_time - start_time)[0] == "1" and str(unformatted_new_time - start_time)[1] == " ":
+            new_time += " (next day)"
+            return new_time
+        elif str(unformatted_new_time - start_time)[4] == "y":
+            new_time += str(unformatted_new_time - start_time)[:5]
+            return new_time
+        else:
+            new_time += str(unformatted_new_time - start_time)[:6]
+            return new_time
+    else:
+        return new_time
 
-add_time("11:40 AM", "1:25")
+print(add_time("11:40 AM", "31:25"))
