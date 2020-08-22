@@ -20,7 +20,8 @@ def add_time(start, duration, weekday = False):
     else:
         new_start = str(int(start[:1]) + 12) + start[2:4]
 
-    start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[2:]), second=0, microsecond=0)
+    # date=birthday...
+    start_time = datetime.datetime.now().replace(month=2, day=2, hour=int(new_start[:2]), minute=int(new_start[2:]), second=0, microsecond=0)
 
     # reformatting added_time...
     if len(duration) == 4:
@@ -38,8 +39,25 @@ def add_time(start, duration, weekday = False):
     new_time_in_datetime = start_time + added_time
     # using strftime() method...
     new_time = new_time_in_datetime.strftime("%-I:%M %p")
-
+    
     difference_in_days = new_time_in_datetime.date() - start_time.date()
+
+    weekdays_dictionary = dict(enumerate(calendar.day_name))
+    if weekday.title() == list(weekdays_dictionary.keys())[0]:
+        calendar.setfirstweekday(calendar.MONDAY)
+    elif weekday.title() == list(weekdays_dictionary.keys())[1]:
+        calendar.setfirstweekday(calendar.TUESDAY)
+    elif weekday.title() == list(weekdays_dictionary.keys())[2]:
+        calendar.setfirstweekday(calendar.WEDNESDAY)
+    elif weekday.title() == list(weekdays_dictionary.keys())[3]:
+        calendar.setfirstweekday(calendar.THURSDAY)
+    elif weekday.title() == list(weekdays_dictionary.keys())[4]:
+        calendar.setfirstweekday(calendar.FRIDAY)
+    elif weekday.title() == list(weekdays_dictionary.keys())[5]:
+        calendar.setfirstweekday(calendar.SATURDAY)
+    elif weekday.title() == list(weekdays_dictionary.keys())[6]:
+        calendar.setfirstweekday(calendar.SUNDAY)
+    print(calendar.setfirstweekday(calendar.MONDAY))
     # logic for output
     if weekday == False:
         if str(difference_in_days) == "0:00:00":
@@ -56,16 +74,16 @@ def add_time(start, duration, weekday = False):
             return new_time
     else:
         if str(difference_in_days) == "0:00:00":
-            return f"{new_time}, {calendar.day_name[new_time_in_datetime.weekday()]}"
+            return f"{new_time}, {current_weekday}"
         elif str(difference_in_days)[:2] == "1" + " ":
-            new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} (next day)"
+            new_time += f", {current_weekday} (next day)"
             return new_time
         if str(difference_in_days)[1] == " ":
-            new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} ({str(difference_in_days)[:1]} days later)"
+            new_time += f", {current_weekday} ({str(difference_in_days)[:1]} days later)"
             return new_time
         else:
-            new_time += f", {calendar.day_name[new_time_in_datetime.weekday()]} ({str(difference_in_days)[:2]} days later)"
+            new_time += f", {current_weekday} ({str(difference_in_days)[:2]} days later)"
             return new_time
 
 
-print(add_time("2:59 AM", "24:00", "Friday"))
+print(add_time("2:59 AM", "24:00", "Monday"))
