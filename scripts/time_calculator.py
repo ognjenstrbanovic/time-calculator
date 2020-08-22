@@ -47,6 +47,6 @@ def add_time(start, duration, weekday = False):
             new_time += str(unformatted_new_time - start_time)[:6]
             return new_time
     else:
-        return new_time
+        return new_time[1:]
 
 print(add_time("5:01 AM", "0:00"))
