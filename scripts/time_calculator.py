@@ -36,7 +36,7 @@ def add_time(start, duration, weekday = False):
 
     # logic...
     hour_minute_second_length = 7
-    if len(str(unformatted_new_time - start_time)) > 7 and weekday == True:
+    if len(str(unformatted_new_time - start_time)) > 7:
         if str(unformatted_new_time - start_time)[0] == "1" and str(unformatted_new_time - start_time)[1] == " ":
             new_time += " (next day)"
             return new_time
@@ -49,4 +49,4 @@ def add_time(start, duration, weekday = False):
     else:
         return new_time
 
-print(add_time("5:01 AM", "0:00"))
+print(add_time("11:59 PM", "24:05"))
