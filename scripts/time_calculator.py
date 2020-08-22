@@ -32,7 +32,7 @@ def add_time(start, duration, weekday = False):
     unformatted_new_time = start_time + added_time
 
     # using strftime() method...
-    new_time = unformatted_new_time.strftime("%I:%M %p")
+    new_time = unformatted_new_time.strftime("%-I:%M %p")
 
     # logic...
     hour_minute_second_length = 7
@@ -47,6 +47,6 @@ def add_time(start, duration, weekday = False):
             new_time += str(unformatted_new_time - start_time)[:6]
             return new_time
     else:
-        return new_time[1:]
+        return new_time
 
 print(add_time("5:01 AM", "0:00"))
