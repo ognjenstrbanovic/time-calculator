@@ -8,7 +8,9 @@ def add_time(start, duration, weekday = False):
     # reformatting 'start'; w/ help from GeeksforGeeks...
     if start[-2:] == "AM" and start[:2] == "12":
         new_start = "00" + start[2:-3]
-    elif start[:2] == "10" or start[:2] == "11":
+    elif start[-2:] == "AM" and (start[:2] == "10" or start[:2] == "11"):
+        new_start = str(int(start[:2])) + start[3:5]
+    elif start[-2:] == "PM" and (start[:2] == "10" or start[:2] == "11"):
         new_start = str(int(start[:2]) + 12) + start[3:5]
     elif start[-2:] == "AM":
         new_start = "0" + str(int(start[:1])) + start[2:4]
@@ -17,7 +19,7 @@ def add_time(start, duration, weekday = False):
     else:
         new_start = str(int(start[:1]) + 12) + start[2:4]
 
-    print(new_start)
+    # print(new_start)
 
     start_time = datetime.datetime.now().replace(hour=int(new_start[:2]), minute=int(new_start[2:]), second=0, microsecond=0)
 
@@ -63,4 +65,4 @@ def add_time(start, duration, weekday = False):
         return new_time
 
 
-print(add_time("8:16 PM", "466:02"))
+print(add_time("11:55 AM", "3:12"))
